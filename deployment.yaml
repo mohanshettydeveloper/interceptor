@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment #indicates the type of object, if service object, provide Service
+metadata: #describes about the application name and labels
+  name: interceptor
+spec:
+  selector:
+    matchLabels:
+      app: interceptor #you can group multiple pods inside a single service. Selector and Label below should match
+  replicas: 3 #Number of replicas created for this deployment
+  template:
+    metadata:
+      labels:
+        app: interceptor #this should match with selector section
+    spec:
+      containers:
+        - name: interceptor
+          image: interceptor:1.0 #image that will be used for container in the cluster
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080 #the port number that container is running on in the cluster
